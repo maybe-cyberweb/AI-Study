@@ -4,6 +4,7 @@
     pointById: new Map(),
     pointMetaById: new Map(),
     mdCache: new Map(),
+    expansions: null,
     searchOpen: false,
     searchQuery: ''
   }
@@ -457,6 +458,8 @@
     const mdPath = `/content/${p.md}`
     const mdText = await loadMarkdown(mdPath)
     const html = mdToHtml(mdText)
+    const expansionMd = state.expansions && state.expansions[id] ? String(state.expansions[id]) : ''
+    const expansionHtml = expansionMd ? mdToHtml(expansionMd) : ''
 
     const navCard = (label, point) => {
       if (!point) {
@@ -478,6 +481,7 @@
         <div class="kb-grid" style="margin-top: 16px; grid-template-columns: 1.4fr 0.9fr; gap: 16px">
           <div class="kb-panel kb-card">
             <div class="kb-prose">${html}</div>
+            ${expansionHtml ? `<div style="height: 12px"></div><div class="kb-prose">${expansionHtml}</div>` : ''}
           </div>
           <div class="kb-grid" style="grid-auto-rows: min-content">
             <div class="kb-panel kb-card">
@@ -527,7 +531,12 @@
     const q = state.searchQuery.trim().toLowerCase()
     const all = Array.from(state.pointById.values())
     const matches = q
-      ? all.filter((p) => (p.title + ' ' + p.summary + ' ' + (p.tags || []).join(' ')).toLowerCase().includes(q)).slice(0, 14)
+      ? all
+          .filter((p) => {
+            const extra = state.expansions && state.expansions[p.id] ? String(state.expansions[p.id]) : ''
+            return (p.title + ' ' + p.summary + ' ' + (p.tags || []).join(' ') + ' ' + extra).toLowerCase().includes(q)
+          })
+          .slice(0, 14)
       : all.slice(0, 14)
     const html = matches
       .map((p) => {
@@ -624,6 +633,7 @@
   const init = async () => {
     els.root = document.getElementById('app')
     attachLinkInterceptor()
+    state.expansions = window.__KB_EXPANSIONS__ || null
     const res = await fetch('/content/catalog.json', { cache: 'no-store' })
     if (!res.ok) throw new Error('catalog load failed')
     state.catalog = await res.json()
