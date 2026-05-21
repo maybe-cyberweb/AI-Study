@@ -1,0 +1,442 @@
+{
+  "site": {
+    "title": "农业中关村学院 · AI 智能化建设学习型知识库",
+    "description": "可分享的学习型知识库：按知识大类切换；每类含知识点索引与脑图；覆盖 AI 底层与工程实战。",
+    "updatedAt": "2026-05-20"
+  },
+  "categories": [
+    {
+      "slug": "ai-foundations",
+      "title": "AI 底层（从原理到推理）",
+      "description": "补齐数学/ML/DL/LLM 基础，并能解释“为什么这样设计”。",
+      "sections": [
+        {
+          "title": "数学与概率（必要且够用）",
+          "points": [
+            {
+              "id": "ai-probability",
+              "title": "概率、似然、交叉熵：从分类到语言模型",
+              "summary": "把‘预测下一个 token’写成概率模型，并理解交叉熵为何是训练目标。",
+              "level": "beginner",
+              "tags": ["math", "llm"],
+              "md": "points/ai-probability.md",
+              "related": ["ai-transformer", "ai-pretrain"]
+            },
+            {
+              "id": "ai-linear-algebra",
+              "title": "线性代数在 LLM 里的真实作用",
+              "summary": "矩阵乘、投影、低秩近似：理解 attention/MLP/LoRA 的共同语言。",
+              "level": "beginner",
+              "tags": ["math", "systems"],
+              "md": "points/ai-linear-algebra.md",
+              "related": ["ai-transformer", "ai-lora"]
+            }
+          ]
+        },
+        {
+          "title": "深度学习与 Transformer",
+          "points": [
+            {
+              "id": "ai-backprop",
+              "title": "反向传播与优化：你真正需要掌握的那部分",
+              "summary": "从计算图到梯度下降，再到 AdamW、学习率策略与梯度裁剪。",
+              "level": "intermediate",
+              "tags": ["dl"],
+              "md": "points/ai-backprop.md",
+              "related": ["ai-transformer", "ai-pretrain"]
+            },
+            {
+              "id": "ai-transformer",
+              "title": "Transformer：Attention、MLP、残差与规范化",
+              "summary": "拆开一层 Transformer，明确每个子模块的输入输出与作用边界。",
+              "level": "intermediate",
+              "tags": ["dl", "llm"],
+              "md": "points/ai-transformer.md",
+              "related": ["ai-kv-cache", "ai-quantization"]
+            },
+            {
+              "id": "ai-positional",
+              "title": "位置编码：RoPE 为什么成为主流",
+              "summary": "对比绝对位置、相对位置与 RoPE，并理解长上下文扩展的约束。",
+              "level": "intermediate",
+              "tags": ["llm"],
+              "md": "points/ai-positional.md",
+              "related": ["ai-transformer"]
+            }
+          ]
+        },
+        {
+          "title": "大模型训练与对齐",
+          "points": [
+            {
+              "id": "ai-pretrain",
+              "title": "预训练：从数据到目标函数",
+              "summary": "数据清洗、去重、token 分布，以及 next-token prediction 的工程含义。",
+              "level": "intermediate",
+              "tags": ["llm", "data"],
+              "md": "points/ai-pretrain.md",
+              "related": ["ai-probability", "ai-inference"]
+            },
+            {
+              "id": "ai-sft",
+              "title": "指令微调（SFT）：让模型会‘按要求回答’",
+              "summary": "数据格式、system 指令、拒答策略、以及常见训练坑位。",
+              "level": "intermediate",
+              "tags": ["llm"],
+              "md": "points/ai-sft.md",
+              "related": ["ai-dpo", "ai-prompt"]
+            },
+            {
+              "id": "ai-dpo",
+              "title": "对齐：RLHF 与 DPO 的工程取舍",
+              "summary": "偏好数据、奖励模型、DPO 损失直觉，以及线上对齐的风险控制。",
+              "level": "advanced",
+              "tags": ["llm", "alignment"],
+              "md": "points/ai-dpo.md",
+              "related": ["ai-eval", "agent-guardrails"]
+            },
+            {
+              "id": "ai-lora",
+              "title": "LoRA/QLoRA：低成本定制行业模型",
+              "summary": "低秩适配为何有效、如何选 rank、何时不该 LoRA。",
+              "level": "advanced",
+              "tags": ["llm", "finetune"],
+              "md": "points/ai-lora.md",
+              "related": ["ai-quantization"]
+            }
+          ]
+        },
+        {
+          "title": "推理与系统优化",
+          "points": [
+            {
+              "id": "ai-kv-cache",
+              "title": "KV Cache：决定推理吞吐与成本的关键",
+              "summary": "prefill/decoding、批处理、以及长上下文的显存瓶颈。",
+              "level": "advanced",
+              "tags": ["systems", "llm"],
+              "md": "points/ai-kv-cache.md",
+              "related": ["ai-transformer", "ai-inference"]
+            },
+            {
+              "id": "ai-quantization",
+              "title": "量化：INT8/INT4 的收益与代价",
+              "summary": "何时能无损加速，何时会影响检索/工具调用的稳定性。",
+              "level": "advanced",
+              "tags": ["systems"],
+              "md": "points/ai-quantization.md",
+              "related": ["ai-lora", "ai-kv-cache"]
+            },
+            {
+              "id": "ai-inference",
+              "title": "推理参数：temperature/top_p/重复惩罚如何影响稳定性",
+              "summary": "从采样直觉到“结构化输出”的参数策略。",
+              "level": "intermediate",
+              "tags": ["llm"],
+              "md": "points/ai-inference.md",
+              "related": ["agent-json", "rag-grounding"]
+            },
+            {
+              "id": "ai-speculative",
+              "title": "Speculative Decoding：用“小模型草稿”提速推理",
+              "summary": "理解草稿-验证的推理流程、适用场景、以及对延迟/吞吐的真实收益。",
+              "level": "advanced",
+              "tags": ["systems", "llm"],
+              "md": "points/ai-speculative.md",
+              "related": ["ai-kv-cache", "ai-inference"]
+            },
+            {
+              "id": "ai-serving",
+              "title": "LLM Serving：连续批处理、Paged KV 与吞吐优化",
+              "summary": "从单请求到高并发：prefill/decoding 分离、批处理与显存管理的工程要点。",
+              "level": "advanced",
+              "tags": ["systems", "ops"],
+              "md": "points/ai-serving.md",
+              "related": ["ai-kv-cache", "cost-control"]
+            }
+          ]
+        },
+        {
+          "title": "前沿专题（2025+）",
+          "points": [
+            {
+              "id": "ai-reasoning",
+              "title": "Reasoning 与 Test-Time Compute：把“会想”变成“能算得出”",
+              "summary": "理解推理型模型的训练/推理取舍：长思维链、搜索、采样预算与可靠性。",
+              "level": "advanced",
+              "tags": ["llm"],
+              "md": "points/ai-reasoning.md",
+              "related": ["ai-inference", "rag-eval"]
+            },
+            {
+              "id": "ai-structured-decoding",
+              "title": "结构化生成：Constrained Decoding / Grammar / JSON Schema",
+              "summary": "从“提示词约束”升级为“解码阶段约束”，把格式稳定性做到可控。",
+              "level": "advanced",
+              "tags": ["agent", "safety"],
+              "md": "points/ai-structured-decoding.md",
+              "related": ["agent-json", "ai-inference"]
+            },
+            {
+              "id": "rag-agentic",
+              "title": "Agentic RAG：检索不止一次，而是带计划的多跳检索",
+              "summary": "从一次检索到多步计划：查询分解、证据聚合、与反提示注入。",
+              "level": "advanced",
+              "tags": ["rag", "agent"],
+              "md": "points/rag-agentic.md",
+              "related": ["context-engineering", "rag-grounding"]
+            },
+            {
+              "id": "rag-graphrag",
+              "title": "GraphRAG：用结构化关系提升复杂问题的可解释性",
+              "summary": "构图、社区摘要、证据链与引用：适合政策/制度类“链式影响”问题。",
+              "level": "advanced",
+              "tags": ["rag"],
+              "md": "points/rag-graphrag.md",
+              "related": ["rag-hybrid", "rag-grounding"]
+            }
+          ]
+        },
+        {
+          "title": "表示与检索（Embedding 与 RAG）",
+          "points": [
+            {
+              "id": "rag-embedding",
+              "title": "Embedding：相似度检索背后的表示学习",
+              "summary": "向量的意义、维度选择、以及相似度度量对召回的影响。",
+              "level": "intermediate",
+              "tags": ["rag"],
+              "md": "points/rag-embedding.md",
+              "related": ["rag-ann", "rag-hybrid"]
+            },
+            {
+              "id": "rag-ann",
+              "title": "向量数据库与 ANN：HNSW/IVF 的取舍",
+              "summary": "延迟、召回、内存三角：如何为涉农政策库选索引。",
+              "level": "advanced",
+              "tags": ["rag", "systems"],
+              "md": "points/rag-ann.md",
+              "related": ["rag-embedding", "rag-eval"]
+            }
+          ]
+        }
+      ],
+      "map": {
+        "title": "AI 底层路线图",
+        "mermaid": "flowchart LR\n  A[概率与交叉熵]-->B[预训练]-->C[Transformer]-->D[KV Cache]-->E[推理参数]\n  C-->F[位置编码 RoPE]\n  B-->G[SFT]-->H[DPO/RLHF]\n  C-->I[LoRA/QLoRA]\n  C-->J[量化 INT4]\n  K[Embedding]-->L[ANN 索引]-->M[RAG]\n  click A \"/point/ai-probability\"\n  click B \"/point/ai-pretrain\"\n  click C \"/point/ai-transformer\"\n  click D \"/point/ai-kv-cache\"\n  click E \"/point/ai-inference\"\n  click F \"/point/ai-positional\"\n  click G \"/point/ai-sft\"\n  click H \"/point/ai-dpo\"\n  click I \"/point/ai-lora\"\n  click J \"/point/ai-quantization\"\n  click K \"/point/rag-embedding\"\n  click L \"/point/rag-ann\"\n"
+      }
+    },
+    {
+      "slug": "engineering-practice",
+      "title": "工程实战（RAG / Agent / 部署）",
+      "description": "把大模型变成可控、可评测、可运维的生产系统。",
+      "sections": [
+        {
+          "title": "Prompt 与上下文工程",
+          "points": [
+            {
+              "id": "ai-prompt",
+              "title": "Prompt 工程：可控输出的结构化写法",
+              "summary": "指令、约束、示例与工具协议：把不确定性压到最小。",
+              "level": "beginner",
+              "tags": ["prompt"],
+              "md": "points/ai-prompt.md",
+              "related": ["agent-json", "rag-grounding"]
+            },
+            {
+              "id": "context-engineering",
+              "title": "上下文工程：Write/Select/Compress/Isolate",
+              "summary": "长对话、多用户、多角色场景的上下文治理方法。",
+              "level": "intermediate",
+              "tags": ["context"],
+              "md": "points/context-engineering.md",
+              "related": ["memory-summaries", "tenant-isolation"]
+            }
+          ]
+        },
+        {
+          "title": "RAG 生产化",
+          "points": [
+            {
+              "id": "rag-chunking",
+              "title": "切片：从固定长度到语义切片",
+              "summary": "如何切片决定召回上限：policy 文档的层级与引用保真。",
+              "level": "intermediate",
+              "tags": ["rag", "data"],
+              "md": "points/rag-chunking.md",
+              "related": ["rag-embedding", "rag-hybrid"]
+            },
+            {
+              "id": "rag-hybrid",
+              "title": "混合检索：BM25 + 向量 + RRF",
+              "summary": "农业专有名词+政策条款：必须混合检索才能稳定召回。",
+              "level": "advanced",
+              "tags": ["rag"],
+              "md": "points/rag-hybrid.md",
+              "related": ["rag-rerank", "rag-eval"]
+            },
+            {
+              "id": "rag-rerank",
+              "title": "重排序（Rerank）：把 TopK 做到更可靠",
+              "summary": "cross-encoder、LLM rerank、以及如何避免引入额外幻觉。",
+              "level": "advanced",
+              "tags": ["rag"],
+              "md": "points/rag-rerank.md",
+              "related": ["rag-hybrid", "rag-eval"]
+            },
+            {
+              "id": "rag-grounding",
+              "title": "Grounding：引用、证据与可追溯输出",
+              "summary": "把答案绑定到来源段落：引用格式、证据链、与反幻觉策略。",
+              "level": "intermediate",
+              "tags": ["rag", "safety"],
+              "md": "points/rag-grounding.md",
+              "related": ["agent-json", "rag-eval"]
+            }
+          ]
+        },
+        {
+          "title": "Agent 与 Harness Engineering",
+          "points": [
+            {
+              "id": "agent-harness",
+              "title": "Harness Engineering：Agent = Model + Harness",
+              "summary": "控制环、工具、传感器、熔断与预算：把 Agent 变成发动机。",
+              "level": "advanced",
+              "tags": ["agent"],
+              "md": "points/agent-harness.md",
+              "related": ["agent-json", "tool-deadlocks"]
+            },
+            {
+              "id": "agent-json",
+              "title": "结构化输出：JSON Schema 与强校验",
+              "summary": "用确定性代码约束模型输出，解决幻觉级联与格式崩塌。",
+              "level": "advanced",
+              "tags": ["agent", "safety"],
+              "md": "points/agent-json.md",
+              "related": ["agent-harness", "ai-inference"]
+            },
+            {
+              "id": "agent-guardrails",
+              "title": "安全护栏：政策红线、PII 与越权防护",
+              "summary": "系统提示词不是安全；必须有策略、审计与权限隔离。",
+              "level": "advanced",
+              "tags": ["safety"],
+              "md": "points/agent-guardrails.md",
+              "related": ["tenant-isolation", "agent-json"]
+            }
+          ]
+        },
+        {
+          "title": "MCP 与工具协议",
+          "points": [
+            {
+              "id": "mcp-intro",
+              "title": "MCP：把业务能力变成模型可调用的‘工具’",
+              "summary": "Host/Client/Server、tools/list 与 tools/call 的设计原则。",
+              "level": "intermediate",
+              "tags": ["mcp", "tools"],
+              "md": "points/mcp-intro.md",
+              "related": ["agent-harness", "tool-contracts"]
+            },
+            {
+              "id": "tool-contracts",
+              "title": "工具契约：幂等、超时、重试、可观测",
+              "summary": "让工具调用可控：错误分类、重试预算、以及结果缓存。",
+              "level": "advanced",
+              "tags": ["tools", "backend"],
+              "md": "points/tool-contracts.md",
+              "related": ["tool-deadlocks", "agent-harness"]
+            },
+            {
+              "id": "tool-deadlocks",
+              "title": "死循环与烧钱：工具调用的预算与熔断",
+              "summary": "同一工具最多 3 次、全局 token 预算、以及降级策略。",
+              "level": "advanced",
+              "tags": ["agent", "cost"],
+              "md": "points/tool-deadlocks.md",
+              "related": ["agent-harness", "tool-contracts"]
+            }
+          ]
+        },
+        {
+          "title": "评测、监控与 MLOps",
+          "points": [
+            {
+              "id": "rag-eval",
+              "title": "RAG/Agent 评测：Ragas 与回归测试集",
+              "summary": "忠实度、精确度、召回率；把评测挂到 CI 里防退化。",
+              "level": "intermediate",
+              "tags": ["eval"],
+              "md": "points/rag-eval.md",
+              "related": ["rag-grounding", "observability"]
+            },
+            {
+              "id": "observability",
+              "title": "可观测性：日志/指标/链路追踪在 LLM 系统里怎么做",
+              "summary": "追踪一次回答的检索、重排、调用工具与 token 消耗。",
+              "level": "intermediate",
+              "tags": ["ops"],
+              "md": "points/observability.md",
+              "related": ["cost-control", "tool-contracts"]
+            },
+            {
+              "id": "cost-control",
+              "title": "成本与性能：缓存、批处理与模型路由",
+              "summary": "在保证体验的前提下把成本降下来：何时用小模型、何时摘要。",
+              "level": "intermediate",
+              "tags": ["ops", "cost"],
+              "md": "points/cost-control.md",
+              "related": ["ai-kv-cache", "memory-summaries"]
+            },
+            {
+              "id": "eval-judge",
+              "title": "LLM-as-a-Judge：好用但危险的评测方法",
+              "summary": "如何避免偏置与自嗨：对照基准、仲裁、多提示与可复现评测。",
+              "level": "advanced",
+              "tags": ["eval"],
+              "md": "points/eval-judge.md",
+              "related": ["rag-eval", "observability"]
+            },
+            {
+              "id": "security-prompt-injection",
+              "title": "提示注入与数据外泄：RAG 系统的头号安全问题",
+              "summary": "把注入当成输入攻击：隔离、最小权限、引用过滤与审计。",
+              "level": "advanced",
+              "tags": ["security", "rag"],
+              "md": "points/security-prompt-injection.md",
+              "related": ["rag-grounding", "agent-guardrails"]
+            }
+          ]
+        },
+        {
+          "title": "会话、隔离与记忆",
+          "points": [
+            {
+              "id": "memory-summaries",
+              "title": "长对话：滑动窗口 + 摘要压缩",
+              "summary": "避免上下文退化：锚点提示词、摘要频率与摘要格式。",
+              "level": "intermediate",
+              "tags": ["context"],
+              "md": "points/memory-summaries.md",
+              "related": ["context-engineering", "cost-control"]
+            },
+            {
+              "id": "tenant-isolation",
+              "title": "多租户隔离：干部/角色/组织的上下文边界",
+              "summary": "RLS、命名空间、检索过滤与审计：防止跨人泄露。",
+              "level": "advanced",
+              "tags": ["security"],
+              "md": "points/tenant-isolation.md",
+              "related": ["agent-guardrails", "context-engineering"]
+            }
+          ]
+        }
+      ],
+      "map": {
+        "title": "工程实战路线图",
+        "mermaid": "flowchart TB\n  A[上下文工程]-->B[RAG 生产化]\n  B-->C[混合检索 + Rerank]\n  C-->D[Grounding 引用]\n  D-->E[评测 Ragas]\n  A-->F[Agent Harness]\n  F-->G[JSON Schema 强校验]\n  F-->H[MCP/工具协议]\n  H-->I[预算/熔断/降级]\n  E-->J[可观测性]\n  J-->K[成本控制]\n  click A \"/point/context-engineering\"\n  click B \"/point/rag-chunking\"\n  click C \"/point/rag-hybrid\"\n  click D \"/point/rag-grounding\"\n  click E \"/point/rag-eval\"\n  click F \"/point/agent-harness\"\n  click G \"/point/agent-json\"\n  click H \"/point/mcp-intro\"\n  click I \"/point/tool-deadlocks\"\n  click J \"/point/observability\"\n  click K \"/point/cost-control\"\n"
+      }
+    }
+  ]
+}

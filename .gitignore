@@ -1,0 +1,14 @@
+.vercel/
+.trae/
+
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+
+node_modules/
+.pnpm-store/
+.npm/
+
+dist/
+build/
