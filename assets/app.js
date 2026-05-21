@@ -192,6 +192,61 @@
     return t
   }
 
+  const autoExpansionForPoint = (p, meta) => {
+    const tags = new Set(p.tags || [])
+    const lines = []
+    lines.push('## 学习强化（自动生成）')
+    lines.push('')
+    lines.push('### 学习目标（读完要做到）')
+    lines.push(`- 能用自己的话解释「${p.title}」解决的核心问题，以及它在系统里的位置`)
+    lines.push('- 能写出最小可用实现（MVP）：输入/输出/关键参数/失败策略')
+    lines.push('- 能列出 3 个常见失败模式，并给出可观测指标与回归方法')
+    lines.push('')
+    lines.push('### 落地到你们项目（干部教育智能化）')
+    lines.push('- 对“AI 知识库”：把概念落到索引结构、引用追溯、评测与回归')
+    lines.push('- 对“智能测评/推课”：把输出收敛成结构化结果（JSON Schema），并可被系统校验/落库')
+    lines.push('- 对“智能伴读”：优先做上下文预算与摘要（避免长对话失控），必要时引入工具链')
+    lines.push('')
+    lines.push('### 最小可用实现（MVP 步骤）')
+    lines.push('- 定义输入：用户问题/干部档案/政策文本/课程库（明确权限边界）')
+    lines.push('- 定义输出：必须字段、引用/证据、失败时返回什么（不确定/需要补充材料）')
+    lines.push('- 定义校验：schema 校验、引用校验、权限校验、重试次数与预算')
+    lines.push('- 定义观测：延迟拆解、token/成本、错误码、命中率/通过率')
+    lines.push('')
+    lines.push('### 常见坑与对策（工程视角）')
+    lines.push('- 只靠提示词：改为“强校验 + 有限重试 + 熔断/降级”')
+    lines.push('- 无引用的正确感：改为“结论必须带 citations，且后端校验引用来自检索上下文”')
+    lines.push('- 失败不可解释：改为“错误码 + 可读错误 + 可回归样例集”')
+    if (tags.has('rag')) {
+      lines.push('- 检索不稳：改为 Hybrid（关键词 + 向量）+ RRF + rerank，并固定评测集做回归')
+      lines.push('- Chunk 不合理：按条款/段落切分，保留章/节/条路径，控制长度与重叠')
+      lines.push('- 注入风险：把检索文本当不可信输入，做隔离与过滤（见提示注入专题）')
+    }
+    if (tags.has('agent')) {
+      lines.push('- 工具调用乱：先定义工具契约（输入/输出/错误码/幂等），再让模型调用')
+      lines.push('- 格式漂移：用 JSON Schema/Grammar 把输出约束在解码/校验层')
+      lines.push('- 死循环：限制 tool/retry/token 预算，并实现自动降级（仅检索/仅摘要/人工介入）')
+    }
+    if (tags.has('systems') || tags.has('ops') || tags.has('cost')) {
+      lines.push('- 延迟波动：把延迟拆成排队/prefill/decoding/后处理，做连续批处理与限流')
+      lines.push('- 成本失控：缓存（答案/检索/前缀）+ 路由（小模型优先）+ 输出长度控制')
+      lines.push('- 长上下文爆显存：Select/Compress/Isolate，必要时做摘要与分段回答')
+    }
+    if (tags.has('security')) {
+      lines.push('- 数据外泄：最小权限、检索隔离、多租户隔离、敏感字段阻断、审计日志')
+    }
+    lines.push('')
+    lines.push('### 实战练习（建议加入学习任务）')
+    lines.push('- 练习 1：写一个“输入→输出→校验→失败策略”的说明，并给出 3 条坏样例')
+    lines.push('- 练习 2：设计一组回归集（至少 20 条），指标包含正确率/引用正确率/schema 通过率/成本')
+    lines.push('')
+    lines.push('### 延伸阅读（关键词）')
+    lines.push('- Harness Engineering / Context Engineering / Agentic RAG / GraphRAG')
+    lines.push('- Structured Decoding / JSON Schema / Tool Contracts / Observability')
+    lines.push('')
+    return lines.join('\n')
+  }
+
   const renderShell = (mainHtml) => {
     const site = state.catalog.site
     const categories = state.catalog.categories
@@ -460,6 +515,7 @@
     const html = mdToHtml(mdText)
     const expansionMd = state.expansions && state.expansions[id] ? String(state.expansions[id]) : ''
     const expansionHtml = expansionMd ? mdToHtml(expansionMd) : ''
+    const autoHtml = mdToHtml(autoExpansionForPoint(p, meta))
 
     const navCard = (label, point) => {
       if (!point) {
@@ -482,6 +538,7 @@
           <div class="kb-panel kb-card">
             <div class="kb-prose">${html}</div>
             ${expansionHtml ? `<div style="height: 12px"></div><div class="kb-prose">${expansionHtml}</div>` : ''}
+            <div style="height: 12px"></div><div class="kb-prose">${autoHtml}</div>
           </div>
           <div class="kb-grid" style="grid-auto-rows: min-content">
             <div class="kb-panel kb-card">
